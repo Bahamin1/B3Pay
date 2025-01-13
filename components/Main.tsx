@@ -32,7 +32,7 @@ const Hero = () => {
 			>
 				<motion.h1
 					variants={itemVariants}
-					className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500"
+					className="p-2 text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-blue-500"
 				>
 					Innovators in Technology
 				</motion.h1>
@@ -50,7 +50,7 @@ const Hero = () => {
 					whileTap={{ scale: 0.95 }}
 					className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-black bg-green-500 hover:bg-green-600 transition-colors duration-300"
 				>
-					Get Started
+					Contact us
 					<ArrowRight className="ml-2 -mr-1 h-5 w-5" />
 				</motion.a>
 			</motion.div>

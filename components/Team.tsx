@@ -16,12 +16,12 @@ const teamMembers = [
 	},
 	{
 		name: "Ali Farahmand",
-		role: "Data Scientist and AI programming",
+		role: "Data Scientist and AI programmer",
 		image: "/images/Ali.png",
 	},
 	{
 		name: "Saber MirBagheri",
-		role: "Web Developer and robotics programming",
+		role: "Web Developer and robotics programmer",
 		image: "/images/Saber.png",
 	},
 ];
@@ -83,7 +83,7 @@ const Team = () => {
 								alt={member.name}
 								className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
 								whileHover={{
-									rotate: 360,
+									zoom: 1.5,
 									transition: { duration: 1, ease: "easeInOut" },
 								}}
 							/>
