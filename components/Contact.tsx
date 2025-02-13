@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Send, Upload } from "lucide-react";
+import { Send, Trash2, Upload } from "lucide-react";
 import { useState } from "react";
 
 const Contact = () => {
@@ -17,22 +17,20 @@ const Contact = () => {
 		}
 	};
 
+	const removeFile = () => {
+		setFile(null);
+	};
+
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setIsSending(true);
 		setFeedback(null);
 
-		const formData = new FormData();
-		formData.append("email", email);
-		formData.append("message", message);
-		if (file) {
-			formData.append("file", file);
-		}
-
 		try {
 			const response = await fetch("https://formspree.io/f/xkgozyap", {
 				method: "POST",
-				body: formData,
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ email, message }), // 🚀 Ignores file
 			});
 
 			if (response.ok) {
@@ -41,44 +39,34 @@ const Contact = () => {
 				setMessage("");
 				setFile(null);
 			} else {
-				setFeedback("❌ Failed to send message. Please try again.");
+				setFeedback(
+					"❌ Failed to send message. Please check the form and try again."
+				);
 			}
 		} catch (error) {
+			console.error("Submission Error:", error);
 			setFeedback("❌ An error occurred. Please try again.");
 		} finally {
 			setIsSending(false);
 		}
 	};
 
-	const containerVariants = {
-		hidden: { opacity: 0 },
-		visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
-	};
-
-	const itemVariants = {
-		hidden: { opacity: 0, y: 20 },
-		visible: { opacity: 1, y: 0 },
-	};
-
 	return (
 		<section id="contact" className="py-20 px-4 relative overflow-hidden">
 			<div className="absolute inset-0 z-0 bg-gradient-to-b from-black to-gray-900 opacity-70"></div>
 			<motion.div
-				variants={containerVariants}
-				initial="hidden"
-				animate="visible"
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1, transition: { staggerChildren: 0.2 } }}
 				className="max-w-3xl mx-auto relative z-10"
 			>
-				<motion.h2
-					variants={itemVariants}
-					className="text-4xl font-bold mb-8 text-center text-green-500"
-				>
+				<motion.h2 className="text-4xl font-bold mb-8 text-center text-green-500">
 					Contact Us
 				</motion.h2>
 				<form onSubmit={handleSubmit} className="space-y-6">
-					<motion.div variants={itemVariants}>
+					{/* Email Field */}
+					<motion.div>
 						<label className="block text-sm font-medium text-gray-300">
-							Email
+							Email *
 						</label>
 						<input
 							type="email"
@@ -88,9 +76,11 @@ const Contact = () => {
 							className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
 						/>
 					</motion.div>
-					<motion.div variants={itemVariants}>
+
+					{/* Message Field */}
+					<motion.div>
 						<label className="block text-sm font-medium text-gray-300">
-							Message
+							Message *
 						</label>
 						<textarea
 							rows={4}
@@ -100,11 +90,13 @@ const Contact = () => {
 							className="mt-1 block w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
 						></textarea>
 					</motion.div>
-					<motion.div variants={itemVariants}>
+
+					{/* File Upload */}
+					<motion.div>
 						<label className="block text-sm font-medium text-gray-300">
 							Upload Resume (Optional)
 						</label>
-						<div className="mt-1 flex items-center">
+						<div className="mt-1 flex items-center space-x-3">
 							<input
 								type="file"
 								id="resume"
@@ -121,13 +113,23 @@ const Contact = () => {
 								Choose File
 							</label>
 							{file && (
-								<span className="ml-3 text-sm text-gray-400">{file.name}</span>
+								<div className="flex items-center space-x-2">
+									<span className="text-sm text-gray-400">{file.name}</span>
+									<button
+										type="button"
+										onClick={removeFile}
+										className="text-red-500 hover:text-red-700 focus:outline-none"
+									>
+										<Trash2 className="h-5 w-5" />
+									</button>
+								</div>
 							)}
 						</div>
 					</motion.div>
+
+					{/* Feedback Message */}
 					{feedback && (
 						<motion.div
-							variants={itemVariants}
 							className={`text-center font-semibold ${
 								feedback.includes("✅") ? "text-green-400" : "text-red-400"
 							}`}
@@ -135,7 +137,9 @@ const Contact = () => {
 							{feedback}
 						</motion.div>
 					)}
-					<motion.div variants={itemVariants}>
+
+					{/* Submit Button */}
+					<motion.div>
 						<motion.button
 							whileHover={{ scale: 1.05 }}
 							whileTap={{ scale: 0.95 }}
