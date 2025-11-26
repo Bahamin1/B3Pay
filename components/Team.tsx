@@ -5,24 +5,14 @@ import { useRef } from "react";
 
 const teamMembers = [
 	{
-		name: "Behrad Deylami",
-		role: "Founder, Senior FullStack Specialist Developer Web3 and Web2",
-		image: "/images/Behrad.png",
-	},
-	{
-		name: "Bahamin Deylami",
+		name: "Bahamin Dehpour",
 		role: "Blockchain Smart Contracts Web3 Specialist and Web Developer",
 		image: "/images/Bahamin.jpg",
 	},
 	{
-		name: "Ali Farahmand",
-		role: "Data Scientist and AI programmer",
-		image: "/images/Ali.png",
-	},
-	{
-		name: "Saber MirBagheri",
-		role: "Web Developer and robotics programmer",
-		image: "/images/Saber.png",
+		name: "Behrad Dehpour",
+		role: "Founder, Senior FullStack Specialist Developer Web3 and Web2",
+		image: "/images/Behrad.png",
 	},
 ];
 
@@ -66,29 +56,32 @@ const Team = () => {
 			>
 				<motion.h2
 					variants={itemVariants}
-					className="text-4xl font-bold mb-12 text-center text-green-500"
+					className="text-4xl md:text-5xl font-bold mb-16 text-center text-green-500 font-orbitron tracking-wider text-glow"
 				>
 					Our Team
 				</motion.h2>
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
 					{teamMembers.map((member, index) => (
 						<motion.div
 							key={member.name}
 							variants={itemVariants}
 							whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
-							className="bg-gray-800 bg-opacity-50 p-6 rounded-lg shadow-lg text-center backdrop-blur-sm"
+							className="glass-card p-6 rounded-xl border border-white/10 hover:border-green-500/50 hover:shadow-[0_0_20px_rgba(34,197,94,0.2)] transition-all duration-300 text-center group"
 						>
-							<motion.img
-								src={member.image}
-								alt={member.name}
-								className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
-								whileHover={{
-									zoom: 1.5,
-									transition: { duration: 1, ease: "easeInOut" },
-								}}
-							/>
-							<h3 className="text-xl font-semibold mb-2">{member.name}</h3>
-							<p className="text-green-400">{member.role}</p>
+							<div className="relative w-32 h-32 mx-auto mb-6">
+								<div className="absolute inset-0 rounded-full bg-green-500/20 blur-md group-hover:bg-green-500/40 transition-all duration-300"></div>
+								<motion.img
+									src={member.image}
+									alt={member.name}
+									className="w-32 h-32 rounded-full object-cover relative z-10 border-2 border-green-500/30 group-hover:border-green-500 transition-colors duration-300"
+									whileHover={{
+										scale: 1.1,
+										transition: { duration: 0.3 },
+									}}
+								/>
+							</div>
+							<h3 className="text-lg font-bold mb-2 font-orbitron tracking-wide text-white group-hover:text-green-400 transition-colors duration-300">{member.name}</h3>
+							<p className="text-sm text-gray-400 font-light leading-relaxed">{member.role}</p>
 						</motion.div>
 					))}
 				</div>

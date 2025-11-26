@@ -1,23 +1,33 @@
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
-import Main from "../components/Main";
+import Hero from "../components/Hero";
+import LoadingScreen from "../components/LoadingScreen";
 import MatrixBackground from "../components/MatrixBackground";
 import Navbar from "../components/Navbar";
+import Projects from "../components/Projects";
 import Services from "../components/Services";
 import Team from "../components/Team";
+import Technologies from "../components/Technologies";
+import AIChat from "../components/AIChat";
 
 export default function Home() {
 	return (
-		<main className="flex min-h-screen flex-col bg-black text-white overflow-hidden relative">
-			<MatrixBackground />
-			<div className="relative z-10">
-				<Navbar />
-				<Main />
-				<Services />
-				<Team />
-				<Contact />
-				<Footer />
-			</div>
-		</main>
+		<>
+			<LoadingScreen />
+			<AIChat />
+			<main className="flex min-h-screen flex-col bg-black text-white overflow-hidden relative">
+				<MatrixBackground />
+				<div className="relative z-10 w-full">
+					<Navbar />
+					<Hero />
+					<Services />
+					<Technologies />
+					<Projects />
+					<Team />
+					<Contact />
+					<Footer />
+				</div>
+			</main>
+		</>
 	);
 }

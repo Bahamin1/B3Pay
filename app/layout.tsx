@@ -1,9 +1,20 @@
 import type { Metadata } from "next";
+import { Inter, Orbitron } from "next/font/google";
 import "./globals.css";
 
+const inter = Inter({
+	subsets: ["latin"],
+	variable: "--font-inter",
+});
+
+const orbitron = Orbitron({
+	subsets: ["latin"],
+	variable: "--font-orbitron",
+});
+
 export const metadata: Metadata = {
-	title: "B3Pay App",
-	description: "Created with B3",
+	title: "B3Pay - Blockchain, AI & Web3 Solutions",
+	description: "Building the future with cutting-edge technology",
 };
 
 export default function RootLayout({
@@ -13,9 +24,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<link rel="icon" href="/logo (2).ico" type="image/x-icon" />
-
-			<body>{children}</body>
+			<body className={`${inter.variable} ${orbitron.variable} font-sans`}>
+				{children}
+			</body>
 		</html>
 	);
 }
