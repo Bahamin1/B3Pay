@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Orbitron } from "next/font/google";
+import { Inter, Orbitron, Vazirmatn } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -10,6 +10,11 @@ const inter = Inter({
 const orbitron = Orbitron({
 	subsets: ["latin"],
 	variable: "--font-orbitron",
+});
+
+const vazirmatn = Vazirmatn({
+	subsets: ["arabic"],
+	variable: "--font-vazirmatn",
 });
 
 export const metadata: Metadata = {
@@ -24,7 +29,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={`${inter.variable} ${orbitron.variable} font-sans`}>
+			<body className={`${inter.variable} ${orbitron.variable} ${vazirmatn.variable} font-sans`}>
 				{children}
 			</body>
 		</html>

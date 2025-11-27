@@ -12,6 +12,7 @@ const config: Config = {
   	extend: {
   		fontFamily: {
   			orbitron: ["var(--font-orbitron)"],
+            vazirmatn: ["var(--font-vazirmatn)"],
   		},
   		colors: {
   			background: 'hsl(var(--background))',

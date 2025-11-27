@@ -131,17 +131,46 @@ const AIChat = () => {
 		setInputValue("");
 		setIsTyping(true);
 
-		// Simulate natural typing delay
-		setTimeout(() => {
+		try {
+			const response = await fetch("/api/chat", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					messages: [...messages, userMessage].map(m => ({
+						text: m.text,
+						sender: m.sender
+					}))
+				}),
+			});
+
+			if (!response.ok) {
+				throw new Error("Failed to fetch response");
+			}
+
+			const data = await response.json();
+			
 			const botResponse: Message = {
+				id: messages.length + 2,
+				text: data.response,
+				sender: "bot",
+				timestamp: new Date(),
+			};
+			setMessages((prev) => [...prev, botResponse]);
+		} catch (error) {
+			console.error("Error fetching chat response:", error);
+			// Fallback to local smart response if API fails
+			const fallbackResponse: Message = {
 				id: messages.length + 2,
 				text: getSmartResponse(currentInput),
 				sender: "bot",
 				timestamp: new Date(),
 			};
-			setMessages((prev) => [...prev, botResponse]);
+			setMessages((prev) => [...prev, fallbackResponse]);
+		} finally {
 			setIsTyping(false);
-		}, 800 + Math.random() * 800);
+		}
 	};
 
 	const quickQuestions = [
@@ -150,6 +179,11 @@ const AIChat = () => {
 		"How can I contact you?",
 		"Show me your projects",
 	];
+
+	const isFarsi = (text: string) => {
+		const farsiRegex = /[\u0600-\u06FF]/;
+		return farsiRegex.test(text);
+	};
 
 	return (
 		<>
@@ -218,38 +252,46 @@ const AIChat = () => {
 
 						{/* Messages */}
 						<div className="flex-1 overflow-y-auto p-4 space-y-4 bg-black/20">
-							{messages.map((message) => (
-								<motion.div
-									key={message.id}
-									initial={{ opacity: 0, y: 10 }}
-									animate={{ opacity: 1, y: 0 }}
-									className={`flex gap-2 ${message.sender === "user" ? "flex-row-reverse" : "flex-row"}`}
-								>
-									<div
-										className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-											message.sender === "user" ? "bg-blue-600" : "bg-green-600"
-										}`}
+							{messages.map((message) => {
+								const isMsgFarsi = isFarsi(message.text);
+								return (
+									<motion.div
+										key={message.id}
+										initial={{ opacity: 0, y: 10 }}
+										animate={{ opacity: 1, y: 0 }}
+										className={`flex gap-2 ${message.sender === "user" ? "flex-row-reverse" : "flex-row"}`}
 									>
-										{message.sender === "user" ? (
-											<User className="w-5 h-5 text-white" />
-										) : (
-											<Bot className="w-5 h-5 text-white" />
-										)}
-									</div>
-									<div
-										className={`max-w-[70%] p-3 rounded-2xl ${
-											message.sender === "user"
-												? "bg-blue-600 text-white rounded-tr-none"
-												: "bg-white/10 text-gray-200 rounded-tl-none border border-white/10"
-										}`}
-									>
-										<p className="text-sm whitespace-pre-line">{message.text}</p>
-										<span className="text-xs opacity-60 mt-1 block">
-											{message.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-										</span>
-									</div>
-								</motion.div>
-							))}
+										<div
+											className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
+												message.sender === "user" ? "bg-blue-600" : "bg-green-600"
+											}`}
+										>
+											{message.sender === "user" ? (
+												<User className="w-5 h-5 text-white" />
+											) : (
+												<Bot className="w-5 h-5 text-white" />
+											)}
+										</div>
+										<div
+											className={`max-w-[70%] p-3 rounded-2xl ${
+												message.sender === "user"
+													? "bg-blue-600 text-white rounded-tr-none"
+													: "bg-white/10 text-gray-200 rounded-tl-none border border-white/10"
+											}`}
+										>
+											<p 
+												className={`text-sm whitespace-pre-line ${isMsgFarsi ? "font-vazirmatn text-right" : "text-left"}`}
+												dir={isMsgFarsi ? "rtl" : "ltr"}
+											>
+												{message.text}
+											</p>
+											<span className="text-xs opacity-60 mt-1 block text-left">
+												{message.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+											</span>
+										</div>
+									</motion.div>
+								);
+							})}
 
 							{isTyping && (
 								<motion.div
