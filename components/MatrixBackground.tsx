@@ -21,6 +21,9 @@ const MatrixBackground: React.FC = () => {
 		const canvas = canvasRef.current;
 		if (!canvas) return;
 
+		// Store previous width to detect horizontal resizes
+		let prevWidth = window.innerWidth;
+
 		const ctx = canvas.getContext("2d", { alpha: false });
 		if (!ctx) return;
 
@@ -125,8 +128,18 @@ const MatrixBackground: React.FC = () => {
 		};
 
 		const handleResize = () => {
-			resizeCanvas();
-			initParticles();
+			const newWidth = window.innerWidth;
+			
+			// Only re-initialize particles if width changes (e.g. orientation change)
+			// This prevents reset on mobile scroll (address bar toggle)
+			if (newWidth !== prevWidth) {
+				prevWidth = newWidth;
+				resizeCanvas();
+				initParticles();
+			} else {
+				// If only height changed, just update canvas size but keep particles
+				resizeCanvas();
+			}
 		};
 
 		resizeCanvas();
