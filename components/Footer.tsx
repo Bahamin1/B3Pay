@@ -122,8 +122,8 @@ const Footer = () => {
 						className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4"
 					>
 						<p className="text-gray-400 font-light text-sm flex items-center gap-2">
-							© 2024 <span className="text-green-500 font-orbitron">B3Pay</span>. Made with{" "}
-							<Heart className="w-4 h-4 text-red-500 fill-current" /> by Bahamin & Behrad Dehpour
+							© 2024 <span className="text-green-500 font-orbitron">B3Pay</span>. Made
+						 by Bahamin & Behrad Dehpour
 						</p>
 						<p className="text-gray-500 text-xs font-orbitron">
 							POWERED BY NEXT.JS & FRAMER MOTION

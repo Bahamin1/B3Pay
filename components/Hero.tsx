@@ -40,7 +40,6 @@ const Hero = () => {
 					initial={{ opacity: 0, y: 30 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.8 }}
-					className="glass-card p-8 md:p-12 lg:p-16 rounded-2xl max-w-5xl w-full border-white/10 border shadow-[0_0_50px_rgba(34,197,94,0.1)]"
 				>
 					{/* Badge */}
 					<motion.div
@@ -71,7 +70,7 @@ const Hero = () => {
 						transition={{ delay: 0.6, duration: 0.8 }}
 						className="text-lg md:text-2xl text-gray-300 mb-4 max-w-3xl mx-auto leading-relaxed font-light"
 					>
-						Building the Future with <span className="text-green-400 font-semibold">Blockchain</span>, <span className="text-blue-400 font-semibold">AI</span> & <span className="text-purple-400 font-semibold">Web3</span>
+						<span className="text-green-400 font-semibold">Blockchain</span>, <span className="text-blue-400 font-semibold">AI</span>, <span className="text-purple-400 font-semibold">Web3</span>, <span className="text-red-400 font-semibold">Full Stack</span>, <span className="text-yellow-400 font-semibold">Smart Contracts</span>, <span className="text-pink-400 font-semibold">DeFi</span>, <span className="text-orange-400 font-semibold">NFT</span>
 					</motion.p>
 
 					<motion.p
@@ -123,9 +122,9 @@ const Hero = () => {
 						className="mt-12 pt-8 border-t border-white/10 grid grid-cols-3 gap-6"
 					>
 						{[
-							{ value: "50+", label: "Projects" },
-							{ value: "3+", label: "Years" },
-							{ value: "100%", label: "Success" },
+							{ value: "60+", label: "Projects" },
+							{ value: "5+", label: "Years Experience" },
+							{ value: "100%", label: "Success Projects" },
 						].map((stat, index) => (
 							<motion.div
 								key={stat.label}

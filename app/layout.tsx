@@ -20,6 +20,10 @@ const vazirmatn = Vazirmatn({
 export const metadata: Metadata = {
 	title: "B3Pay - Blockchain, AI & Web3 Solutions",
 	description: "Building the future with cutting-edge technology",
+	icons: {
+		icon: "/icon.png",
+		apple: "/apple-icon.png",
+	},
 };
 
 export default function RootLayout({
